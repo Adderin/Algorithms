@@ -2,38 +2,38 @@ package coursera;
 
 import java.util.Scanner;
 
-public class QuickFind {
+public class QuickUnion {
     private int[] id;
 
     //public constructor
-    public QuickFind(int N) {
+    public QuickUnion(int N) {
         id = new int[N];
         for (int i = 0; i < N; i++) {
             id[i] = i;
         }
     }
 
-    //method checks if p and q are interconnected
-    public boolean connected(int p, int q) {
-        return id[p] == id[q];
+    private int root(int i) {
+        while (i != id[i]) {
+            i = id[i];
+        }
+        return i;
     }
 
-    //method to perform union
-    public void union(int p, int q) {
-        int pid = id[p];
-        int qid = id[q];
-        for (int i = 0; i < id.length; i++) {
-            if (id[i] == pid) {
-                id[i] = qid;
-            }
-        }
+    //method checks if p and q are interconnected
+    public boolean connected(int p, int q) {
+        return root(p) == root(q);
+    }
 
+    public void union(int p, int q) {
+        int i = root(p);
+        int j = root(q);
+        id[i] = j;
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int arrayElements = scanner.nextInt();
-        QuickFind qf = new QuickFind(arrayElements);
-
+        QuickUnion qu = new QuickUnion(arrayElements);
     }
 }
